@@ -284,7 +284,7 @@ void Service::run() {
             boost::asio::io_context *iot = new boost::asio::io_context;
             work_io_contexts.push_back(iot);
             boost::asio::io_context::work work(*iot);
-            works.push_back(work);
+            works.push_back(move(work));
             work_threads.emplace_back([=]() {
                 iot->run();
             });
@@ -339,6 +339,7 @@ void Service::async_accept() {
         async_accept();
     });
 }
+
 
 boost::asio::io_context &Service::service() {
     return io_context;

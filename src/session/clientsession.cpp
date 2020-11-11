@@ -411,11 +411,11 @@ void ClientSession::destroy() {
     if (out_socket.next_layer().is_open()) {
         auto self = shared_from_this();
         auto ssl_shutdown_cb = [this, self](const boost::system::error_code error) {
+            ssl_shutdown_timer.cancel();
             if (error == boost::asio::error::operation_aborted) {
                 return;
             }
             boost::system::error_code ec;
-            ssl_shutdown_timer.cancel();
             out_socket.next_layer().cancel(ec);
             out_socket.next_layer().shutdown(tcp::socket::shutdown_both, ec);
             out_socket.next_layer().close(ec);
