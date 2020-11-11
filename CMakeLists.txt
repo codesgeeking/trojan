@@ -23,11 +23,7 @@ add_executable(trojan
     src/proto/trojanrequest.cpp
     src/proto/udppacket.cpp
     src/session/clientsession.cpp
-    src/session/forwardsession.cpp
-    src/session/natsession.cpp
-    src/session/serversession.cpp
     src/session/session.cpp
-    src/session/udpforwardsession.cpp
     src/ssl/ssldefaults.cpp
     src/ssl/sslsession.cpp)
 include_directories(src)
@@ -56,14 +52,6 @@ if(OPENSSL_VERSION VERSION_GREATER_EQUAL 1.1.1)
     if(ENABLE_TLS13_CIPHERSUITES)
         add_definitions(-DENABLE_TLS13_CIPHERSUITES)
     endif()
-endif()
-
-option(ENABLE_MYSQL "Build with MySQL support" ON)
-if(ENABLE_MYSQL)
-    find_package(MySQL REQUIRED)
-    include_directories(${MYSQL_INCLUDE_DIR})
-    target_link_libraries(trojan ${MYSQL_LIBRARIES})
-    add_definitions(-DENABLE_MYSQL)
 endif()
 
 option(FORCE_TCP_FASTOPEN "Force build with TCP Fast Open support" OFF)

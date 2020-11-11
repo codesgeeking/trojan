@@ -20,17 +20,19 @@
 #ifndef _SESSION_H_
 #define _SESSION_H_
 
-#include <ctime>
-#include <memory>
+#include "core/config.h"
 #include <boost/asio/io_context.hpp>
 #include <boost/asio/ip/udp.hpp>
 #include <boost/asio/steady_timer.hpp>
-#include "core/config.h"
+#include <ctime>
+#include <memory>
 
-class Session : public std::enable_shared_from_this<Session> {
+class Session : public std::enable_shared_from_this<Session>
+{
 protected:
-    enum {
-        MAX_LENGTH = 8192,
+    enum
+    {
+        MAX_LENGTH = 1024,
         SSL_SHUTDOWN_TIMEOUT = 30
     };
     const Config &config;
@@ -47,9 +49,10 @@ protected:
     boost::asio::ip::udp::socket udp_socket;
     boost::asio::ip::udp::endpoint udp_recv_endpoint;
     boost::asio::steady_timer ssl_shutdown_timer;
+
 public:
     Session(const Config &config, boost::asio::io_context &io_context);
-    virtual boost::asio::ip::tcp::socket& accept_socket() = 0;
+    virtual boost::asio::ip::tcp::socket &accept_socket() = 0;
     virtual void start() = 0;
     virtual ~Session();
 };
