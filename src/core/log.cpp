@@ -53,7 +53,6 @@ void Log::log(const string &message, Level level) {
 
 void Log::log_with_date_time(const string &message, Level level) {
     static const char *level_strings[] = {"ALL", "INFO", "WARN", "ERROR", "FATAL", "OFF"};
-    ostringstream stream;
     char buff[20];
     time_t now = time(nullptr);
     tm *time = localtime(&now);
